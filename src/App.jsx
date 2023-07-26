@@ -9,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/memory-game" element={<MemoryGame />}></Route>
+        {/* No match route */}
       </Routes>
     </div>
   );

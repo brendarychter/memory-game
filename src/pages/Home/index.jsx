@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '@/components/Utils/Spinner';
 
 export default function Home() {
   const navigate = useNavigate();
   const [username, setUserName] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(false);
@@ -22,7 +23,7 @@ export default function Home() {
   return (
     <>
       {loading ? (
-        <span>loading</span>
+        <Spinner />
       ) : (
         <div className="max-w-xl lg:max-w-lg">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">

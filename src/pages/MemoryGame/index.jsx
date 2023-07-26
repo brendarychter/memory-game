@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCards } from '@/api/userController';
+import Spinner from '@/components/Utils/Spinner';
 
 export default function MemoryGame() {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ export default function MemoryGame() {
   return (
     <>
       {loading ? (
-        <span>loading</span>
+        <Spinner />
       ) : (
         <div>
           {/* esto como logo arriba */}
