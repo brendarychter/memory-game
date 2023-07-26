@@ -5,10 +5,12 @@ import Home from './pages/Home';
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />}></Route>
-      <Route path="/memory-game" element={<MemoryGame />}></Route>
-    </Routes>
+    <div className="bg-stone-800 flex items-center justify-center h-screen font-mono">
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/memory-game" element={<MemoryGame />}></Route>
+      </Routes>
+    </div>
   );
 }
 
