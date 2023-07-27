@@ -5,7 +5,7 @@ import Spinner from '@/components/Utils/Spinner';
 export default function Home() {
   const navigate = useNavigate();
   const [username, setUserName] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(false);
@@ -14,7 +14,7 @@ export default function Home() {
     }
   });
 
-  const redirectToGame = () => {
+  const startGame = () => {
     setLoading(true);
     localStorage.setItem('username', username);
     navigate('/memory-game');
@@ -48,7 +48,7 @@ export default function Home() {
             <button
               type="submit"
               className="flex-none rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm enabled:hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 disabled:opacity-75"
-              onClick={() => redirectToGame()}
+              onClick={() => startGame()}
               disabled={username === ''}
             >
               Jugar
