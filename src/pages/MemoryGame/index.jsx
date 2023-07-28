@@ -1,26 +1,22 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getCards } from '@/api/userController';
 import Spinner from '@/components/Utils/Spinner';
 import Panel from '@/components/Core/Panel';
-
+import { UserContext } from '../../context';
+import Card
+ from '../../components/Core/Card';
 export default function MemoryGame() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
   const [error, setError] = useState(false);
-  const [user, setUser] = useState({
-    name: localStorage.getItem('username'),
-    hits: 0,
-    misses: 1
-  });
+
+  const {user, cards, setCards, loading, setLoading} = useContext(UserContext)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const result = await getCards();
-        console.log(result);
-        setData(result);
+        setCards(result);
         setLoading(false);
         // TODO: error
       } catch (error) {
@@ -28,15 +24,16 @@ export default function MemoryGame() {
       }
     };
     fetchData();
-  }, []);
+  }, [setCards, setLoading]);
 
+
+  // Hook to verify if user exists in localstorage, otherwise it redirects to login page
   useEffect(() => {
     if (localStorage.getItem('username') == null) {
       setLoading(true);
       navigate(`/`);
     }
-    //TODO: Handle
-  }, [navigate]);
+  }, [navigate, setLoading]);
 
   return (
     <>
@@ -49,11 +46,9 @@ export default function MemoryGame() {
             Memory game
           </h2>
           <Panel {...user} />
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-4">
-            {data?.map(({ id, image }) => (
-              <div key={id} className=" bg-blue-500 p-4 ">
-                <img className="img h-20 w-20" src={image}/>
-              </div>
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-10 gap-4">
+            {cards?.map((card) => (
+              <Card {...card} key={card.id} />
             ))}
           </div>
         </div>

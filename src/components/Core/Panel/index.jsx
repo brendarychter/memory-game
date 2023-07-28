@@ -6,6 +6,7 @@ const Panel = ({ name, hits, misses }) => {
       <div>{name} a jugar!</div>
       <div>{hits}</div>
       <div>{misses}</div>
+      <div>Nuevo juego</div>
     </div>
   );
 };
