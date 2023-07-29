@@ -6,23 +6,21 @@ export default function Card({ card, selectCard }) {
   const handleChange = () => selectCard(card);
 
   return (
-    <div className="p-2">
-      <div className="">
-        {isFlipped ? (
-          <img
-            className="h-16 w-16 sm:w-20 sm:h-20 object-cover rounded-md border-solid border-2 border-violet-500"
-            key={id}
-            src={image}
-            alt={name}
-            disabled={isFlipped === true}
-          />
-        ) : (
-          <div
-            className="h-16 w-16 sm:w-20 sm:h-20 bg-gradient-to-r from-indigo-500 to-violet-500 cursor-pointer rounded-md border-solid border-2 border-white"
-            onClick={handleChange}
-          ></div>
-        )}
-      </div>
+    <div className={`relative ${isFlipped && `[transform:rotateY(180deg)]`} transition-all duration-500[transform-style:preserve-3d]`}>
+      {isFlipped ? (
+        <img
+          className="object-cover w-20 h-20 border-2 border-solid rounded-md border-violet-500"
+          key={id}
+          src={image}
+          alt={name}
+          disabled={isFlipped}
+        />
+      ) : (
+        <div
+          className="w-20 h-20 border-2 border-white border-solid rounded-md cursor-pointer bg-gradient-to-r from-indigo-500 to-violet-500"
+          onClick={handleChange}
+        ></div>
+      )}
     </div>
   );
 }
