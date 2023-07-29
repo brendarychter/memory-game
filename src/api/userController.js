@@ -10,7 +10,8 @@ const transformData = (entries) => {
         name: meta.name,
         uuid: meta.uuid,
         image: fields.image.url,
-        id: index
+        id: index, 
+        isFlipped: false
       };
     })
     .sort(() => Math.random() - 0.5);

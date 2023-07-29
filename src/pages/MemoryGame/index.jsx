@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { getCards } from '@/api/userController';
 import Spinner from '@/components/Utils/Spinner';
 import Panel from '@/components/Core/Panel';
+import Card from '@/components/Core/Card';
 
 export default function MemoryGame() {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
@@ -15,28 +14,34 @@ export default function MemoryGame() {
     misses: 1
   });
 
+  const [selectedCards, setSelectedCards] = useState([]);
+
   useEffect(() => {
-    const fetchData = async () => {
+     const fetchData = async() => {
       try {
         const result = await getCards();
-        console.log(result);
         setData(result);
         setLoading(false);
-        // TODO: error
+        // TODO: handle error
       } catch (error) {
         console.log(error.message);
       }
-    };
+    }
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (localStorage.getItem('username') == null) {
-      setLoading(true);
-      navigate(`/`);
+
+  // Card selection and compare between each other.
+  // It is sent by the parent to the card child and executed when it's clicked
+  const selectCard = (card) => {
+    if (selectedCards.length === 0) {
+      setSelectedCards((prevArray) => [...prevArray, card.uuid]);
     }
-    //TODO: Handle
-  }, [navigate]);
+  };
+
+  useEffect(() => {
+    console.log(selectedCards);
+  }, [selectedCards]);
 
   return (
     <>
@@ -50,10 +55,8 @@ export default function MemoryGame() {
           </h2>
           <Panel {...user} />
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-4">
-            {data?.map(({ id, image }) => (
-              <div key={id} className=" bg-blue-500 p-4 ">
-                <img className="img h-20 w-20" src={image}/>
-              </div>
+            {data?.map((card) => (
+              <Card card={card} selectCard={selectCard} key={card.id} />
             ))}
           </div>
         </div>

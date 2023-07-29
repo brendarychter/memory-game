@@ -1,15 +1,26 @@
-import { Routes, Route } from 'react-router-dom';
-import './App.css';
+import { useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import MemoryGame from '@/pages/MemoryGame';
 import Home from '@/pages/Home';
 
 function App() {
+  const navigate = useNavigate();
+  const USERNAME = localStorage.getItem('username');
+
+  /*   Hook to redirect to the corresponding page in case the user is logged in or not.*/
+  useEffect(() => {
+    if (USERNAME === null) {
+      navigate('/');
+    } else {
+      navigate('/memory-game');
+    }
+  }, [navigate, USERNAME]);
+
   return (
     <div className="bg-stone-800 flex items-center justify-center h-screen font-mono">
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/memory-game" element={<MemoryGame />}></Route>
-        {/* No match route */}
+        <Route path="/" element={<Home />} />
+        <Route path="/memory-game" element={<MemoryGame />} />
       </Routes>
     </div>
   );
