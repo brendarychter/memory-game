@@ -3,44 +3,57 @@ import { getCards } from '@/api/userController';
 import Spinner from '@/components/Utils/Spinner';
 import Panel from '@/components/Core/Panel';
 import Card from '@/components/Core/Card';
+import Header from '@/components/Core/Header';
 
 export default function MemoryGame() {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
   const [user, setUser] = useState({
     name: localStorage.getItem('username'),
     hits: 0,
-    misses: 1
+    misses: 0
   });
 
+  const [loading, setLoading] = useState(true);
+  const [cards, setCards] = useState([]);
+  const [error, setError] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
+  const [flippedCards, setFlippedCards] = useState([]);
 
   useEffect(() => {
-     const fetchData = async() => {
+    let ignore = false;
+    const fetchData = async () => {
       try {
         const result = await getCards();
-        setData(result);
-        setLoading(false);
-        // TODO: handle error
+        if (!ignore) {
+          setCards(result);
+          setLoading(false);
+        }
       } catch (error) {
         console.log(error.message);
       }
-    }
+    };
     fetchData();
+    return () => {
+      ignore = true;
+    };
   }, []);
 
-
   // Card selection and compare between each other.
-  // It is sent by the parent to the card child and executed when it's clicked
   const selectCard = (card) => {
-    if (selectedCards.length === 0) {
+    console.log(card)
+    if (selectedCards.length < 2)
       setSelectedCards((prevArray) => [...prevArray, card.uuid]);
-    }
   };
 
   useEffect(() => {
-    console.log(selectedCards);
+    console.log(selectedCards)
+    if (selectedCards.length == 2) {
+      if (selectedCards[0] === selectedCards[1]) {
+        setUser({...user, hits: user.hits + 1});
+      } else {
+        setUser({...user, misses: user.misses + 1});
+      }
+      setTimeout(setSelectedCards([], 1000));
+    }
   }, [selectedCards]);
 
   return (
@@ -49,13 +62,10 @@ export default function MemoryGame() {
         <Spinner />
       ) : (
         <div>
-          {/* esto como logo arriba */}
-          <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Memory game
-          </h2>
+          <Header />
           <Panel {...user} />
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-4">
-            {data?.map((card) => (
+            {cards?.map((card) => (
               <Card card={card} selectCard={selectCard} key={card.id} />
             ))}
           </div>

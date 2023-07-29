@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 const Panel = ({ name, hits, misses }) => {
-  console.log(hits)
   return (
     <div>
       <div>{name} a jugar!</div>

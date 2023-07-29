@@ -11,7 +11,7 @@ export default function Home() {
   //After the component is loaded, the spinner is hidden
   useEffect(() => {
     setLoading(false);
-  }, [loading]);
+  }, []);
 
   /* When the user clicks the Play button, it stores the name in localStorage and
     navigates to the game */

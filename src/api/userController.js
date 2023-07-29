@@ -1,6 +1,8 @@
-// Call to service method.
-// TODO: pass param to paginate service
-
+/* Transforming the response: duplicating the images,
+  saving the data the front needs, and adding 
+  the isFlipped property
+  Then, the array is sorted randomly
+*/
 const transformData = (entries) => {
   const cards = [...entries, ...entries];
   return cards
@@ -17,6 +19,7 @@ const transformData = (entries) => {
     .sort(() => Math.random() - 0.5);
 };
 
+/* Api call. Handling different types of errors */
 export const getCards = async () => {
   try {
     const CARDS_URL =
