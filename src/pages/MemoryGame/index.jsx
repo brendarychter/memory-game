@@ -6,8 +6,9 @@ import Card from '@/components/Core/Card';
 import Header from '@/components/Core/Header';
 
 export default function MemoryGame() {
-  const [user, setUser] = useState({
-    name: localStorage.getItem('username'),
+  const USERNAME = localStorage.getItem('username');
+
+  const [gameStatus, setGameStatus] = useState({
     hits: 0,
     misses: 0
   });
@@ -37,36 +38,50 @@ export default function MemoryGame() {
     };
   }, []);
 
-  // Card selection and compare between each other.
-  const selectCard = (card) => {
-    console.log(card)
-    if (selectedCards.length < 2)
+  const choiceCard = (card) => {
+    if (selectedCards.length < 2) {
+      const updatedCards = cards.map((c) =>
+        c.id === card.id ? { ...c, isFlipped: true } : c
+      );
+      setCards(updatedCards);
       setSelectedCards((prevArray) => [...prevArray, card.uuid]);
+    }
   };
 
   useEffect(() => {
-    console.log(selectedCards)
     if (selectedCards.length == 2) {
-      if (selectedCards[0] === selectedCards[1]) {
-        setUser({...user, hits: user.hits + 1});
-      } else {
-        setUser({...user, misses: user.misses + 1});
-      }
-      setTimeout(setSelectedCards([], 1000));
+      // If the cards are the same, it must update the panel with hits
+      // and the card with it's state
+      setTimeout(() => {
+        if (selectedCards[0] === selectedCards[1]) {
+          // find uuid and change to flipped true
+          setGameStatus({ ...gameStatus, hits: gameStatus.hits + 1 });
+        } else {
+          setCards(
+            cards.map((card) => {
+              return selectedCards.find((c) => card.uuid === c)
+                ? { ...card, isFlipped: false }
+                : card;
+            })
+          );
+          setGameStatus({ ...gameStatus, misses: gameStatus.misses + 1 });
+        }
+        setSelectedCards([]);
+      }, 1000);
     }
-  }, [selectedCards]);
+  }, [selectedCards, gameStatus, cards]);
 
   return (
     <>
       {loading ? (
         <Spinner />
       ) : (
-        <div>
+        <div className="">
           <Header />
-          <Panel {...user} />
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 gap-4">
+          <Panel user={USERNAME} status={gameStatus} />
+          <div className="grid grid-cols-4 md:grid-cols-5 lg:grid-cols-8 gap-2">
             {cards?.map((card) => (
-              <Card card={card} selectCard={selectCard} key={card.id} />
+              <Card card={card} selectCard={choiceCard} key={card.id} />
             ))}
           </div>
         </div>

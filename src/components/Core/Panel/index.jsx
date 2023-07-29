@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
-const Panel = ({ name, hits, misses }) => {
+const Panel = ( {user, status}) => {
+  const {hits, misses} = status
   return (
     <div>
-      <div>{name} a jugar!</div>
+      <div>{user} a jugar!</div>
       <div>{hits}</div>
       <div>{misses}</div>
     </div>
@@ -10,8 +11,7 @@ const Panel = ({ name, hits, misses }) => {
 };
 
 Panel.propTypes = {
-  name: PropTypes.string.isRequired,
-  hits: PropTypes.number.isRequired,
-  misses: PropTypes.number.isRequired
+  user: PropTypes.object,
+  status: PropTypes.object
 };
 export default Panel;
