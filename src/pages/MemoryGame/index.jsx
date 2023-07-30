@@ -85,7 +85,7 @@ export default function MemoryGame() {
       ) : (
         <div className="h-screen">
           <Panel status={gameStatus} />
-          <div className="grid grid-cols-4 gap-2 md:gap-4 md:grid-cols-5 lg:grid-cols-8 p-y-10">
+          <div className="grid grid-cols-4 gap-4 md:grid-cols-5 lg:grid-cols-8 p-y-10">
             {cards?.map((card) => (
               <Card card={card} selectCard={choiceCard} key={card.id} />
             ))}

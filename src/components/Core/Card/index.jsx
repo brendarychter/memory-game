@@ -7,10 +7,10 @@ const Card = ({ card, selectCard }) => {
   const handleChange = () => selectCard(card);
 
   return (
-    <div className={`relative ${isFlipped && `[transform:rotateY(180deg)]`} transition-all duration-500[transform-style:preserve-3d]`}>
+    <div className={`flex relative ${isFlipped && `[transform:rotateY(180deg)]`} transition-all duration-500[transform-style:preserve-3d]`}>
       {isFlipped ? (
         <img
-          className="object-cover w-16 h-16 border-2 border-solid rounded-md md:w-24 md:h-24 border-violet-500"
+          className="object-cover border-2 border-solid rounded-md w-14 h-14 md:w-24 md:h-24 border-violet-500"
           key={id}
           src={image}
           alt={name}
@@ -18,7 +18,7 @@ const Card = ({ card, selectCard }) => {
         />
       ) : (
         <div
-          className="w-16 h-16 border-2 border-white border-solid rounded-md cursor-pointer md:w-24 md:h-24 bg-gradient-to-r from-indigo-500 to-violet-500"
+          className="border-2 border-white border-solid rounded-md cursor-pointer w-14 h-14 md:w-24 md:h-24 bg-gradient-to-r from-indigo-500 to-violet-500"
           onClick={handleChange}
         ></div>
       )}
