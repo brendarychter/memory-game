@@ -3,19 +3,20 @@ import { getCards } from '@/api/userController';
 import Spinner from '@/components/Utils/Spinner';
 import Panel from '@/components/Core/Panel';
 import Card from '@/components/Core/Card';
-import Header from '@/components/Core/Header';
 import Modal from '../../components/Utils/Modal';
 
 export default function MemoryGame() {
-  const USERNAME = localStorage.getItem('username');
   const [gameStatus, setGameStatus] = useState({
     hits: 0,
     misses: 0
   });
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState([]);
-  const [error, setError] = useState(false);
+  // const [error, setError] = useState(false);
   const [selectedCards, setSelectedCards] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+
+  const shuffleCards = (cards) => cards.sort(() => Math.random() - 0.5);
 
   useEffect(() => {
     let ignore = false;
@@ -23,7 +24,7 @@ export default function MemoryGame() {
       try {
         const result = await getCards();
         if (!ignore) {
-          setCards(result);
+          setCards(shuffleCards(result));
           setLoading(false);
         }
       } catch (error) {
@@ -31,9 +32,6 @@ export default function MemoryGame() {
       }
     };
     fetchData();
-    return () => {
-      ignore = true;
-    };
   }, []);
 
   const choiceCard = (card) => {
@@ -65,9 +63,21 @@ export default function MemoryGame() {
           misses: !match ? gameStatus.misses + 1 : gameStatus.misses
         });
         setSelectedCards([]);
+        
+        if (cards.every((card) => card.isFlipped === true)) {
+          setShowModal(true);
+        }
       }, 1000);
     }
   }, [selectedCards, gameStatus, cards]);
+
+  const resetGame = () => {
+    setShowModal(false);
+    const newcards = cards.map((obj) => ({ ...obj, isFlipped: false }))
+    console.log(newcards);
+    setCards(shuffleCards(newcards));
+    // contador en 0
+  };
 
   return (
     <>
@@ -75,14 +85,18 @@ export default function MemoryGame() {
         <Spinner />
       ) : (
         <div className="">
-          <Header />
-          <Panel user={USERNAME} status={gameStatus} />
+          <Panel status={gameStatus} />
           <div className="grid grid-cols-4 gap-4 md:grid-cols-5 lg:grid-cols-8">
             {cards?.map((card) => (
               <Card card={card} selectCard={choiceCard} key={card.id} />
             ))}
           </div>
-          <Modal/>
+          {/* {showModal && ( */}
+            <Modal
+              gameStatus={gameStatus}
+              resetGame={resetGame}
+            />
+          {/* )} */}
         </div>
       )}
     </>

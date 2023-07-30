@@ -1,5 +1,6 @@
-// eslint-disable-next-line react/prop-types
-export default function Card({ card, selectCard }) {
+import PropTypes from 'prop-types';
+
+const Card = ({ card, selectCard }) => {
   const { image, id, name, isFlipped } = card;
   //Evitar que clickee sobre si mismo
   // When user clicks on a card, it executes the function sent by the parent
@@ -24,3 +25,8 @@ export default function Card({ card, selectCard }) {
     </div>
   );
 }
+Card.propTypes = {
+    card: PropTypes.object.isRequired,
+    selectCard: PropTypes.func.isRequired
+}
+export default Card;

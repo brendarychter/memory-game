@@ -3,7 +3,7 @@
   the isFlipped property
   Then, the array is sorted randomly
 */
-const transformData = (entries) => {
+export const transformData = (entries) => {
   const cards = [...entries, ...entries];
   return cards
     .map((entry, index) => {
@@ -16,14 +16,13 @@ const transformData = (entries) => {
         isFlipped: false
       };
     })
-    .sort(() => Math.random() - 0.5);
 };
 
 /* Api call. Handling different types of errors */
 export const getCards = async () => {
   try {
     const CARDS_URL =
-      'https://fed-team.modyo.cloud/api/content/spaces/animals/types/game/entries?per_page=20';
+      'https://fed-team.modyo.cloud/api/content/spaces/animals/types/game/entries?per_page=2';
     const response = await fetch(CARDS_URL, { mode: 'cors' });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
