@@ -31,7 +31,7 @@ export default function Home() {
       {loading ? (
         <Spinner />
       ) : (
-        <div className="max-w-xl lg:max-w-lg">
+        <div className="max-w-xl text-center lg:max-w-lg">
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Memory game
           </h2>

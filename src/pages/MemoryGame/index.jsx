@@ -6,10 +6,11 @@ import Card from '@/components/Core/Card';
 import Modal from '../../components/Utils/Modal';
 
 export default function MemoryGame() {
-  const [gameStatus, setGameStatus] = useState({
+  const STATUS = {
     hits: 0,
     misses: 0
-  });
+  };
+  const [gameStatus, setGameStatus] = useState(STATUS);
   const [loading, setLoading] = useState(true);
   const [cards, setCards] = useState([]);
   // const [error, setError] = useState(false);
@@ -63,7 +64,7 @@ export default function MemoryGame() {
           misses: !match ? gameStatus.misses + 1 : gameStatus.misses
         });
         setSelectedCards([]);
-        
+
         if (cards.every((card) => card.isFlipped === true)) {
           setShowModal(true);
         }
@@ -73,10 +74,8 @@ export default function MemoryGame() {
 
   const resetGame = () => {
     setShowModal(false);
-    const newcards = cards.map((obj) => ({ ...obj, isFlipped: false }))
-    console.log(newcards);
-    setCards(shuffleCards(newcards));
-    // contador en 0
+    setGameStatus(STATUS);
+    setCards(shuffleCards(cards.map((obj) => ({ ...obj, isFlipped: false }))));
   };
 
   return (
@@ -91,12 +90,7 @@ export default function MemoryGame() {
               <Card card={card} selectCard={choiceCard} key={card.id} />
             ))}
           </div>
-          {showModal && (
-            <Modal
-              gameStatus={gameStatus}
-              resetGame={resetGame}
-            />
-          )}
+          {showModal && <Modal gameStatus={gameStatus} resetGame={resetGame} />}
         </div>
       )}
     </>
