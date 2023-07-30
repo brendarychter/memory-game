@@ -17,7 +17,7 @@ function App() {
   }, [navigate, USERNAME]);
 
   return (
-    <div className="flex items-center justify-center h-screen font-mono bg-stone-800">
+    <div className="flex items-center justify-center h-screen overflow-auto font-mono bg-stone-800">
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/memory-game" element={<MemoryGame />} />

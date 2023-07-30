@@ -22,7 +22,7 @@ export const transformData = (entries) => {
 export const getCards = async () => {
   try {
     const CARDS_URL =
-      'https://fed-team.modyo.cloud/api/content/spaces/animals/types/game/entries?per_page=2';
+      'https://fed-team.modyo.cloud/api/content/spaces/animals/types/game/entries?per_page=20';
     const response = await fetch(CARDS_URL, { mode: 'cors' });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
