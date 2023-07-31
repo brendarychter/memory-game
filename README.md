@@ -7,7 +7,7 @@ You can play it [here](https://memory-game-psi-topaz.vercel.app/)
 
 This project was made with `React + TailwindCSS + Vite`, tested with `Vitest` and deployed with `Vercel`
 
-## PRerequisites
+## Prerequisites
 
 Use Node version 18.7.0 and React version 18.2.15
 
