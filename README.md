@@ -22,7 +22,7 @@ Clone project to local
 Go to the project directory
 
 ```bash
-  cd memory-game-search
+  cd memory-game
 ```
 
 Install dependencies
@@ -45,7 +45,7 @@ Tests with Vitest
 
 ## New features coming soon
 
-Allow user to define difficulty of the game
+Allow user to define difficulty of the game (20 - 40 - 60 cards)
 
 Add timer to the game
 
