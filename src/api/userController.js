@@ -1,7 +1,6 @@
 /* Transforming the response: duplicating the images,
-  saving the data the front needs, and adding 
+  saving only the data the front needs, and adding 
   the isFlipped property
-  Then, the array is sorted randomly
 */
 export const transformData = (entries) => {
   const cards = [...entries, ...entries];

@@ -6,6 +6,9 @@ const Modal = ({ gameStatus, resetGame }) => {
   const { hits, misses } = gameStatus;
   const USERNAME = localStorage.getItem('username');
 
+  /* When the user wants to exit the game, the localStorage clears the user value 
+   * and navigates to the home page
+   */
   const exitGame = () => {
     localStorage.clear();
     navigate('/');

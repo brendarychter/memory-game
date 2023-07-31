@@ -1,10 +1,11 @@
 # Memory game
 
-In this game, you have to challenge your memory. Are you ready to [play](https://memory-game-psi-topaz.vercel.app/memory-game)?
+In this game, you have to challenge your memory by finding the matching cards.
+You can play it [here](https://memory-game-psi-topaz.vercel.app/)
 
 ## Tech Stack
 
-This project was made with React + Vite and deployed with Vercel
+This project was made with `React + TailwindCSS + Vite`, tested with `Vitest` and deployed with `Vercel`
 
 ## PRerequisites
 
@@ -47,3 +48,5 @@ Tests with Vitest
 Allow user to define difficulty of the game
 
 Add timer to the game
+
+Convert app to PWA

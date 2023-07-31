@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 
 const Card = ({ card, selectCard }) => {
   const { image, id, name, isFlipped } = card;
-  //Evitar que clickee sobre si mismo
+
   // When user clicks on a card, it executes the function sent by the parent
   const handleChange = () => selectCard(card);
 
@@ -15,6 +15,7 @@ const Card = ({ card, selectCard }) => {
           src={image}
           alt={name}
           disabled={isFlipped}
+          loading="lazy"
         />
       ) : (
         <div
